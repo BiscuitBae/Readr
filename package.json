@@ -7,7 +7,7 @@
     "build": "npm run build:client-dev",
     "build:client-dev": "webpack --config webpack.config.js --mode development --watch",
     "build:client": "webpack --config webpack.config.js --mode development",
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "test": "mocha --bail --reporter nyan test/index.test.js"
   },
   "repository": {
@@ -58,9 +58,11 @@
     "react-dom": "^16.11.0",
     "react-feather": "^2.0.3",
     "react-gesture-responder": "^2.1.0",
+    "react-google-login": "^5.2.2",
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
     "react-use-gesture": "^6.0.14",
-    "sequelize": "^5.21.2"
+    "sequelize": "^5.21.2",
+    "sweetalert2": "^11.0.16"
   }
 }
