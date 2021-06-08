@@ -25,22 +25,27 @@ passport.deserializeUser((id, next) => {
 
 passport.use(
   new GoogleStrategy({
-    callbackURL: '/auth/google/redirect',
-    clientID: process.env.clientID,
-    clientSecret: process.env.clientSecret,
+    callbackURL: 'http://localhost:8080/auth/google/redirect',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
   }, (accessToken, refreshToken, profile, next) => {
     // check if user already exists in DB
     // find user with matching googleId and profile.id
+    // console.log('accessToken', accessToken);
+    // console.log('refreshToken', refreshToken);
+    // console.log('profile', profile);
     User.findOne({
       where: {
         googleId: profile.id,
       },
     })
       .then((currentUser) => {
+        console.log('currentUser', currentUser);
         if (currentUser) {
           // if user exists
           next(null, currentUser);
         } else {
+          console.log('currentUser doesn\'t exist, profile is:', profile);
           // if user doesn't exist
           // use profile.id & profile.displayName for saving in db
           // create new sequelize User given ^
@@ -52,8 +57,10 @@ passport.use(
             .then((newUser) => {
               dbHelpers.createPreferences(newUser.dataValues.id);
               next(null, newUser);
-            });
+            })
+            .catch((err) => console.log(err));
         }
-      });
+      })
+      .catch((err) => console.log(err));
   }),
 );

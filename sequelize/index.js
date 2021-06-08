@@ -20,7 +20,7 @@ const db = new Sequelize({
   host: HOST,
   port: DB_PORT,
   dialect: 'postgres',
-  logging: false,
+  logging: true,
 });
 
 // creating the table for the user
@@ -72,7 +72,6 @@ const UserBlocked = db.define('user_blocked', {
   userID: Sequelize.INTEGER, // User ID
   blockedID: Sequelize.INTEGER, // ID of user blocked by User ID
 });
-
 
 // creating the fields on the table
 const UserBook = db.define('user_book', {
